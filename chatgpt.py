@@ -50,32 +50,39 @@ client = OpenAI()
 
 response = client.chat.completions.create(  # TODO: top_k, temp, n
     model=MODEL,
-    # temperature=0.0,  # TODO: this model does not support temp 0.0
-    # top_p=0.9,  # Adjust the top_p as needed
-    # n=3,  # Number of completions to generate
+    temperature=0.0,  # TODO: this model does not support temp 0.0
+    top_p=0.9,  # Adjust the top_p as needed  # TODO: add evals
+    n=1,  # Number of completions to generate
     messages=[
         {
-            "role": "user",
+            "role": "system",
             "content": (
-                "You are an expert auditor specialized in regulatory standards compliance. "
-                "Your role is to critically analyze documents for non-conformities, ensuring your findings are accurate, reliable, "
-                "and supported by the relevant clauses of the provided standard."
+                "You are a certified ISO 13485:2016 compliance auditor for medical devices. "
+                "Your task is to review provided company documentation strictly against the ISO 13485:2016 standard.\n\n"
+                "Guidelines:\n"
+                "- **Strict Standard Adherence:** Only identify non-conformities that are clearly defined in the ISO 13485:2016 standard. Do not infer or add requirements beyond what is written in the standard.\n"
+                "- **Conservative Approach:** If any evidence is ambiguous or partial, do not flag it as a non-conformity. Only report findings you are highly confident about.\n"
+                "- **Structured Reporting:**\n"
+                "    1. **Introduction:** Briefly summarize the review context.\n"
+                "    2. **Findings:** For each non-conformity, include:\n"
+                "         - **Document Section:** The exact section, paragraph, or clause where the issue is observed.\n"
+                "         - **Finding:** Description of the deviation or missing element.\n"
+                "         - **Standard Reference:** The exact clause or subclause from ISO 13485:2016 (with a quotation) that is not met.\n"
+                "         - **Reason:** Why this issue constitutes a non-conformity.\n"
+                "         - **Recommendation:** A practical recommendation to remedy the issue.\n"
+                "    3. **Conclusion:** Summarize overall compliance and note if further human review is needed.\n"
+                "- **Data Sources:** Base your analysis solely on the provided ISO standard text and the company document content.\n"
+                "- **Tone:** Use clear, professional, and objective language suitable for a formal audit report.\n\n"
+                "Now, using the provided ISO standard text and company document content, generate your audit report."
             )
         },
         {
             "role": "user",
             "content": (
-                f"You are provided with a document titled '{DOCUMENT}', which covers {DOCUMENT_TOPIC}. "
-                f"Your task is to review this document for potential non-conformities related to {ANALYSIS_TOPIC} as specified in the provided standard. "
-                f"For this analysis, focus exclusively on sections of the document that pertain to {ANALYSIS_SECTION} and ignore any other areas.\n\n"
-                "For every non-conformity you identify, please provide a structured response that includes:\n\n"
-                "1. **Document Section**: Clearly indicate the specific section, paragraph, or clause from the document where the issue is found.\n"
-                "2. **Finding**: Describe the issue or missing element in detail, explaining what is non-compliant.\n"
-                "3. **Standard Reference**: Cite the exact clause or subclause from the provided standard that is not being met.\n"
-                "4. **Reason**: Explain why this issue constitutes a non-conformity under the specified standard.\n"
-                "5. **Recommendation**: Provide a practical recommendation for addressing or remedying the non-conformity, if applicable.\n\n"
-                "If any critical information is unclear or absent in the document, note this as a potential non-conformity and specify what information is missing. "
-                "Do not assume compliance without explicit evidence.\n\n"
+                f"Document Title: '{DOCUMENT}'\n"
+                f"Document Topic: {DOCUMENT_TOPIC}\n"
+                f"Analysis Topic: {ANALYSIS_TOPIC}\n"
+                f"Analysis Section: {ANALYSIS_SECTION}\n\n"
                 "Standard Content (extracted from PDF):\n\n"
                 f"{STANDARD_TEXT}\n\n"
                 "Document Content:\n\n"
