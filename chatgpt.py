@@ -1,9 +1,5 @@
 import PyPDF2
 from openai import OpenAI
-import pandas as pd
-
-
-# from processing import pdf_to_text
 
 def extract_text_from_pdf(pdf_path):
     text = ""
@@ -20,16 +16,6 @@ def extract_text_from_pdf(pdf_path):
                 print(f"Error extracting text from page {page}: {e}")
     return text
 
-
-# TODO:
-# top_p: This parameter controls nucleus sampling. It specifies the cumulative probability threshold for token selection.
-# The model considers only the smallest set of tokens whose cumulative probability is greater than or equal to top_p.
-# For example, if top_p is set to 0.9, the model will consider only the tokens that together make up 90% of the probability
-# mass. This helps in generating more coherent and contextually relevant responses
-
-# n: This parameter specifies the number of completions to generate. If n is set to 3, the model will generate three
-# different completions for the given prompt. This can be useful for getting multiple variations of the response and
-# selecting the best one.
 
 standard_pdf_path = "ISO-13485-2016.pdf"
 STANDARD_TEXT = extract_text_from_pdf(standard_pdf_path)
@@ -101,15 +87,6 @@ def main():
     # save audit_findings to txt
     with open(f"audit_findings_{MODEL}.md", "w") as f:
         f.write(audit_findings)
-
-    # Convert response into a DataFrame
-    # data = [line.split("|") for line in audit_findings.strip().split("\n")[1:]]
-    # df = pd.DataFrame(data, columns=["Document Section", "Finding", "ISO Reference"])
-    #
-    # # Save the findings table
-    # df.to_csv("iso_audit_findings.csv", index=False)
-    # print("Audit findings saved to iso_audit_findings.csv")
-
 
 if __name__ == "__main__":
     main()
