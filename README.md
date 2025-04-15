@@ -8,10 +8,10 @@
 > This a generalized version of the project. The specific code, architecture, and data are property of the client and 
 cannot be fully shared.
 
-A solution designed to automate the process of auditing company documentation for compliance with ISO 13485:2016 standards. 
+A solution designed to automate the process of analyzing company documentation for compliance with ISO 13485:2016 standards. 
 It uses OpenAI's language models to generate structured audit reports based on extracted document content.
 
-<img width=100% height=100%  src="https://github.com/danvargg/audit-agent/blob/main/img/Screenshot%202025-04-15%20120054.png">
+<img width=100% height=100%  src="https://github.com/danvargg/audit-agent/blob/main/img/ui.png">
 
 ## Business Problem
 The tool addresses the need for efficient and accurate compliance auditing in the medical device industry. It reduces 
