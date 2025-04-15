@@ -10,7 +10,7 @@ st.sidebar.header("Upload Files")
 standard_file = st.sidebar.file_uploader("Upload ISO Standard", type=["pdf"])
 document_file = st.sidebar.file_uploader("Upload Document", type=["pdf"])
 
-if st.sidebar.button("Analyze"):
+if st.sidebar.button("Analyze"):  # TODO: download button to side bar
     if standard_file and document_file:
         with st.spinner("Analyzing..."):
             files = {
