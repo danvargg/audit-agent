@@ -1,3 +1,6 @@
 openai
 PyPDF2
 pandas
+python-multipart
+streamlit
+python-docx
